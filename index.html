@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为 TangYani 捐赠</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .qr-code-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #e2e8f0; /* Tailwind gray-200 */
+            border-radius: 0.5rem; /* Tailwind rounded-lg */
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Tailwind shadow-md */
+            margin-bottom: 1.5rem; /* Tailwind mb-6 */
+            /* Animation for QR code containers */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 0.6s ease-out forwards;
+        }
+        .qr-code-container:nth-child(1) {
+            animation-delay: 0.4s; /* Delay for the first QR code */
+        }
+        .qr-code-container:nth-child(2) {
+            animation-delay: 0.6s; /* Slightly later delay for the second QR code */
+        }
+        .qr-code-image {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            margin-bottom: 1rem; /* Tailwind mb-4 */
+        }
+        .qr-code-caption {
+            font-size: 0.875rem; /* Tailwind text-sm */
+            color: #4a5568; /* Tailwind gray-700 */
+            text-align: center;
+        }
+        .thank-you-message {
+            font-size: 1.125rem; /* Tailwind text-lg */
+            color: #2d3748; /* Tailwind gray-800 */
+            font-weight: 600; /* Tailwind font-semibold */
+        }
+        .important-note {
+            background-color: #fefcbf; /* Tailwind yellow-100 */
+            border-left-width: 4px;
+            border-color: #f6e05e; /* Tailwind yellow-400 */
+            padding: 1rem; /* Tailwind p-4 */
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            margin-top: 1.5rem; /* Tailwind mt-6 */
+            /* Animation for important note */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 0.6s ease-out forwards;
+            animation-delay: 0.8s; /* Delay for the important note */
+        }
+        .important-note p {
+            color: #744210; /* Tailwind yellow-800 */
+        }
+
+        /* Keyframes for the fade in and slide up animation */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Apply animation to the main content block */
+        .main-content-animated {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInSlideUp 0.8s ease-out forwards;
+        }
+
+        /* Stagger animation for header elements */
+        header h1, header p {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 0.6s ease-out forwards;
+        }
+        header h1 {
+            animation-delay: 0.1s;
+        }
+        header p {
+            animation-delay: 0.2s;
+        }
+        footer p {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 0.6s ease-out forwards;
+            animation-delay: 1s;
+        }
+
+        /* Music toggle button styling */
+        .music-toggle-button {
+            position: absolute; /* Position relative to the nearest positioned ancestor */
+            top: 1rem; /* 16px from top */
+            right: 1rem; /* 16px from right */
+            background-color: #6366f1; /* Tailwind indigo-500 */
+            color: white;
+            padding: 0.75rem 1.25rem; /* py-3 px-5 */
+            border-radius: 9999px; /* rounded-full */
+            font-weight: 600; /* font-semibold */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            cursor: pointer;
+            z-index: 10; /* Ensure it's above other content */
+        }
+
+        .music-toggle-button:hover {
+            background-color: #4f46e5; /* Tailwind indigo-600 */
+            transform: translateY(-1px);
+        }
+
+        .music-toggle-button:active {
+            transform: translateY(1px);
+        }
+
+        /* Responsive adjustments for the button */
+        @media (max-width: 640px) {
+            .music-toggle-button {
+                top: 0.5rem;
+                right: 0.5rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem; /* text-sm */
+            }
+        }
+
+        /* Contact section styling */
+        .contact-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem; /* gap-6 */
+            margin-top: 2.5rem; /* mt-10 */
+            text-align: center;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f7fafc; /* Tailwind gray-50 */
+            padding: 1.5rem; /* p-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            border: 1px solid #edf2f7; /* Tailwind gray-100 */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+        }
+
+        .contact-item img {
+            width: 120px; /* Smaller QR code for contact */
+            height: 120px;
+            object-fit: contain;
+            border-radius: 0.25rem; /* rounded-md */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+
+        .contact-item p {
+            font-size: 0.95rem; /* slightly larger than qr-code-caption */
+            color: #4a5568; /* Tailwind gray-700 */
+            font-weight: 500;
+        }
+
+        @media (min-width: 768px) {
+            .contact-section {
+                grid-template-columns: repeat(2, 1fr); /* md:grid-cols-2 */
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 relative"> <button id="musicToggleButton" class="music-toggle-button">暂停音乐</button> <audio id="backgroundMusic" preload="auto"></audio>
+
+    <div class="bg-white shadow-xl rounded-xl p-6 sm:p-10 w-full max-w-2xl main-content-animated">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">感谢您对 <span class="text-indigo-600">TangYani</span> 的支持</h1>
+            <p class="text-gray-600 mt-2">您的每一份心意都至关重要。</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <div class="qr-code-container">
+                <h2 class="text-xl font-semibold text-gray-700 mb-3">微信支付</h2>
+                <img src="weixin.png" alt="微信收款二维码" class="qr-code-image" onerror="this.onerror=null;this.src='https://placehold.co/200x200/e2e8f0/4a5568?text=微信二维码加载失败';">
+                <p class="qr-code-caption">请使用微信扫描上方二维码进行捐赠。</p>
+            </div>
+
+            <div class="qr-code-container">
+                <h2 class="text-xl font-semibold text-gray-700 mb-3">支付宝</h2>
+                <img src="zhifubao.png" alt="支付宝收款二维码" class="qr-code-image" onerror="this.onerror=null;this.src='https://placehold.co/200x200/e2e8f0/4a5568?text=支付宝二维码加载失败';">
+                <p class="qr-code-caption">请使用支付宝扫描上方二维码进行捐赠。</p>
+            </div>
+        </div>
+
+        <div class="important-note mt-8">
+            <p class="font-semibold text-yellow-800">重要提示：</p>
+            <p class="text-yellow-700">请确认您正在为 <strong class="font-bold">TangYani</strong> 捐赠。感谢您的善举！</p>
+        </div>
+
+        <footer class="mt-10 text-center">
+            <p class="thank-you-message">再次感谢您的慷慨解囊！</p>
+            <p class="text-sm text-gray-500 mt-2">如果您在捐赠过程中遇到任何问题，请随时联系我们。</p>
+
+            <div class="contact-section">
+                <div class="contact-item">
+                    <img src="qqlianxi.png" alt="QQ联系二维码" onerror="this.onerror=null;this.src='https://placehold.co/120x120/e2e8f0/4a5568?text=QQ二维码加载失败';">
+                    <p>通过 QQ 联系我们</p>
+                </div>
+                <div class="contact-item">
+                    <img src="weixinlianxi.png" alt="微信联系二维码" onerror="this.onerror=null;this.src='https://placehold.co/120x120/e2e8f0/4a5568?text=微信二维码加载失败';">
+                    <p>通过 微信 联系我们</p>
+                </div>
+            </div>
+            </footer>
+    </div>
+
+    <script>
+        // 获取音乐播放器和按钮元素
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const musicToggleButton = document.getElementById('musicToggleButton');
+
+        // 音乐文件列表
+        // IMPORTANT: 由于浏览器安全限制，JavaScript无法直接读取本地文件夹内容。
+        // 您需要手动在此处列出 'music/' 文件夹中所有音乐文件的完整路径和文件名。
+        // 例如：如果您的 music 文件夹中有 "my_song_1.mp3" 和 "another_tune.mp3"，
+        // 那么此数组应为 ['music/my_song_1.mp3', 'music/another_tune.mp3']。
+        const musicFiles = [
+            'music/1.mp3',
+            'music/2.mp3',
+            'music/3.mp3',
+            'music/4.mp3',
+            'music/5.mp3'
+            // 请根据您实际的音乐文件数量和随机文件名在此处添加更多条目
+            // 例如: 'music/random_song_name_a.mp3', 'music/another_random_b.mp3'
+        ];
+
+        let isMusicPlaying = false; // 音乐播放状态
+        let playRetryInterval; // 用于存储 setInterval 的 ID
+        const MAX_PLAY_RETRIES = 5; // 最大重试次数
+        let currentRetryCount = 0; // 当前重试次数
+
+        /**
+         * 尝试播放音乐，并包含重试逻辑
+         * @param {string} musicSrc - 要播放的音乐文件路径
+         */
+        function attemptPlayMusic(musicSrc) {
+            // 如果已经有重试在进行，先清除
+            if (playRetryInterval) {
+                clearInterval(playRetryInterval);
+            }
+
+            currentRetryCount = 0;
+            backgroundMusic.src = musicSrc; // 设置音乐源
+
+            // 立即尝试播放一次
+            backgroundMusic.play()
+                .then(() => {
+                    // 播放成功
+                    isMusicPlaying = true;
+                    musicToggleButton.textContent = '暂停音乐';
+                    console.log(`正在播放: ${musicSrc}`);
+                    // 成功播放后，不需要重试，清除可能存在的 interval
+                    if (playRetryInterval) {
+                        clearInterval(playRetryInterval);
+                    }
+                })
+                .catch(error => {
+                    console.warn(`首次播放失败，尝试重试: ${error.message}`);
+                    // 首次播放失败，开始重试
+                    playRetryInterval = setInterval(() => {
+                        currentRetryCount++;
+                        if (currentRetryCount > MAX_PLAY_RETRIES) {
+                            clearInterval(playRetryInterval);
+                            musicToggleButton.textContent = '播放音乐'; // 达到最大重试次数，按钮显示“播放音乐”
+                            isMusicPlaying = false;
+                            console.error('达到最大播放重试次数，音乐未能播放。请手动点击播放。');
+                            return;
+                        }
+
+                        backgroundMusic.play()
+                            .then(() => {
+                                // 重试成功
+                                isMusicPlaying = true;
+                                musicToggleButton.textContent = '暂停音乐';
+                                console.log(`重试成功，正在播放: ${musicSrc}`);
+                                clearInterval(playRetryInterval); // 成功后清除 interval
+                            })
+                            .catch(retryError => {
+                                console.warn(`重试播放失败 (尝试 ${currentRetryCount}/${MAX_PLAY_RETRIES}): ${retryError.message}`);
+                                // 如果重试失败，并且不是因为用户交互而暂停，则继续尝试
+                                if (backgroundMusic.paused && currentRetryCount < MAX_PLAY_RETRIES) {
+                                    // 继续尝试
+                                } else {
+                                    // 播放失败或达到最大重试次数
+                                    clearInterval(playRetryInterval);
+                                    musicToggleButton.textContent = '播放音乐';
+                                    isMusicPlaying = false;
+                                    console.error('音乐未能播放。请手动点击播放。');
+                                }
+                            });
+                    }, 1000); // 每1秒重试一次
+                });
+        }
+
+        /**
+         * 播放随机音乐
+         * 从 musicFiles 数组中随机选择一首音乐并播放
+         */
+        function playRandomMusic() {
+            if (musicFiles.length === 0) {
+                console.warn('音乐文件列表为空，无法播放音乐。');
+                musicToggleButton.textContent = '无音乐';
+                return;
+            }
+
+            // 随机选择一首音乐
+            const randomIndex = Math.floor(Math.random() * musicFiles.length);
+            const selectedMusic = musicFiles[randomIndex];
+
+            attemptPlayMusic(selectedMusic); // 调用带重试逻辑的播放函数
+        }
+
+        /**
+         * 暂停音乐
+         */
+        function pauseMusic() {
+            backgroundMusic.pause();
+            isMusicPlaying = false;
+            musicToggleButton.textContent = '播放音乐';
+            console.log('音乐已暂停');
+            // 暂停时清除任何正在进行的重试
+            if (playRetryInterval) {
+                clearInterval(playRetryInterval);
+            }
+        }
+
+        /**
+         * 切换音乐播放/暂停状态
+         */
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                pauseMusic();
+            } else {
+                playRandomMusic();
+            }
+        }
+
+        // 为按钮添加点击事件监听器
+        musicToggleButton.addEventListener('click', toggleMusic);
+
+        // 监听音乐播放结束事件，当一首音乐播放完毕后，更新按钮状态
+        backgroundMusic.addEventListener('ended', () => {
+            isMusicPlaying = false;
+            musicToggleButton.textContent = '播放音乐'; // 播放结束后按钮显示“播放音乐”
+            console.log('音乐播放结束');
+            // 播放结束后清除任何正在进行的重试
+            if (playRetryInterval) {
+                clearInterval(playRetryInterval);
+            }
+        });
+
+        // 页面加载完成后尝试自动播放音乐
+        window.onload = function() {
+            playRandomMusic(); // 尝试播放随机音乐
+        };
+
+    </script>
+</body>
+</html>
